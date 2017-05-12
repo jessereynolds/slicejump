@@ -1,0 +1,17 @@
+source ~/Dropbox/Puppet/slice/jesse.reynolds-openrc.sh
+
+#export OS_AUTH_URL=https://slice-pdx1-prod.ops.puppetlabs.net:5000/v2.0
+#export OS_TENANT_ID=
+#export OS_TENANT_NAME="jesse.reynolds"
+#export OS_PROJECT_NAME="jesse.reynolds"
+#export OS_USERNAME="jesse.reynolds"
+#echo "Please enter your OpenStack Password: "
+#read -sr OS_PASSWORD_INPUT
+#export OS_PASSWORD=$OS_PASSWORD_INPUT
+#
+#export OS_REGION_NAME="pdx1"
+#if [ -z "$OS_REGION_NAME" ]; then unset OS_REGION_NAME; fi
+#
+#export VAGRANT_DEFAULT_PROVIDER="openstack"
+#export OS_KEYPAIR_NAME="slice"
+#export OS_SSH_KEY_PATH='~/.ssh/slice.key'
