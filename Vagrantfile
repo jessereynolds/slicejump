@@ -2,16 +2,16 @@ require 'vagrant-openstack-provider'
 
 $script = <<SCRIPT
 rpm -q epel-release
-if [[ ! $? ]] ; then
+if [[ "$?" -ne "0" ]] ; then
   sudo rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-9.noarch.rpm
 fi
 rpm -q puppetlabs-release-pc1
-if [[ ! $? ]] ; then
+if [[ "$?" -ne "0" ]] ; then
   sudo rpm -Uvh https://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm
 fi
 rpm -q puppet-agent
-if [[ ! $? ]] ; then
-  sudo yum install puppet-agent
+if [[ "$?" -ne "0" ]] ; then
+  sudo yum install -y puppet-agent
 fi
 
 SCRIPT
@@ -28,16 +28,18 @@ Vagrant.configure("2") do |config|
     os.flavor             = 'g1.medium'
     os.image              = 'centos_7_x86_64'
     os.floating_ip_pool   = 'ext-net-pdx1-opdx1'
-    os.networks           = ['network0']
+    os.networks           = ['network1']
     os.security_groups    = ['sg0']
     os.keypair_name       = ENV['OS_KEYPAIR_NAME']
     os.server_name        = 'slicejump'
   end
 
-  config.vm.provision "shell", inline: $script
+  config.vm.provision "shell" do |s|
+    s.inline = $script
+  end
 
   config.vm.provision "puppet" do |puppet|
-    puppet.environment = 'production'
+    puppet.environment      = 'production'
     puppet.environment_path = 'puppet/environments'
   end
 
