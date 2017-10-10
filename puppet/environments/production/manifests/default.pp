@@ -4,6 +4,7 @@ $packages = [
   'mosh',
   'bind-utils',
   'tmux',
+  'git',
 ]
 
 package {$packages:
@@ -34,6 +35,7 @@ include vagrant
 
 $vagrant_plugins = [
   'vagrant-openstack-provider',
+  'oscar',
 ]
 
 vagrant::plugin { $vagrant_plugins:
