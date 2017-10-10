@@ -1,23 +1,15 @@
 require 'vagrant-openstack-provider'
 
 $script = <<SCRIPT
-rpm -q epel-release
-if [[ "$?" -ne "0" ]] ; then
-  sudo rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-9.noarch.rpm
-fi
-rpm -q puppetlabs-release-pc1
-if [[ "$?" -ne "0" ]] ; then
-  sudo rpm -Uvh https://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm
-fi
-rpm -q puppet-agent
-if [[ "$?" -ne "0" ]] ; then
-  sudo yum install -y puppet-agent
-fi
+wget https://apt.puppetlabs.com/puppet5-release-trusty.deb
+sudo dpkg -i puppet5-release-trusty.deb
+sudo apt-get update
 
+sudo apt-get install puppet-agent
 SCRIPT
 
 Vagrant.configure("2") do |config|
-  config.ssh.username = 'centos'
+  config.ssh.username = 'ubuntu'
   config.ssh.private_key_path = ENV['OS_SSH_KEY_PATH']
 
   config.vm.provider :openstack do |os|
@@ -26,7 +18,7 @@ Vagrant.configure("2") do |config|
     os.password           = ENV['OS_PASSWORD']
     os.tenant_name        = ENV['OS_TENANT_NAME']
     os.flavor             = 'g1.medium'
-    os.image              = 'centos_7_x86_64'
+    os.image              = 'ubuntu_14.04_x86_64'
     os.floating_ip_pool   = 'ext-net-pdx1-opdx1'
     os.networks           = ['network1']
     os.security_groups    = ['sg0']

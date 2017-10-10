@@ -1,8 +1,6 @@
 
 $packages = [
-  'wget',
   'mosh',
-  'bind-utils',
   'tmux',
   'git',
 ]
@@ -31,14 +29,20 @@ file {'/root/.tmux.conf':
   content => $tmux_conf,
 }
 
+file {'/home/ubuntu/.tmux.conf':
+  ensure  => file,
+  content => $tmux_conf,
+}
+
 include vagrant
 
 $vagrant_plugins = [
   'vagrant-openstack-provider',
   'oscar',
+  'vagrant-norequiretty',
 ]
 
 vagrant::plugin { $vagrant_plugins:
-  user => 'centos'
+  user => 'ubuntu'
 }
 
