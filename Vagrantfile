@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
     os.flavor             = 'g1.medium'
     os.image              = 'ubuntu_14.04_x86_64'
     os.floating_ip_pool   = 'ext-net-pdx1-opdx1'
-    os.networks           = ['network1']
+    os.networks           = ['network0']
     os.security_groups    = ['sg0']
     os.keypair_name       = ENV['OS_KEYPAIR_NAME']
     os.server_name        = 'slicejump'

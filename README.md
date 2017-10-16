@@ -8,12 +8,22 @@ This is a fairly minimal Vagrant project for spinning up a jump host in SLICE
 - mtr
 
 ```
-  Mac / Vagrant ----> SLICE CentOS 7 VM / Vagrant ----> SLICE whatever project
+  Mac / Vagrant ----> SLICE VM / Vagrant ----> SLICE whatever project
 ```
 
 ## Using
 
-There's a bunch of shell environment variables you'll need to set up first. There's an example set of them in `slice.rc`.
+There's a bunch of shell environment variables you'll need to set up first. There's an example set of them in `slice.rc`. You may want to download your slice.rc from the SLICE UI, or copy and modify the example in this repo.
+
+Source the rc file:
+
+```
+source slice.rc
+```
+
+When prompted, provide your PuppetPass password.
+
+In the Vagrantfile you'll see that the slicejump host is being created in network0. You may want to change this if you want your slicejump host in some special network you may have created.
 
 Creation:
 
@@ -29,13 +39,13 @@ vagrant ssh-config
 
 Moshing in (alternative to ssh):
 - ensure mosh is installed on your Mac or whatever your laptop / desktop is running - https://mosh.org/ (eg `brew install mosh`)
-- `mosh --ssh "ssh -i ~/.ssh/slice.pem" centos@IP_ADDR_OF_VM` (replace `IP_ADDR_OF_VM` with the IP of the VM)
+- `mosh --ssh "ssh -i ~/.ssh/slice.pem" ubuntu@IP_ADDR_OF_VM` (replace `IP_ADDR_OF_VM` with the IP of the VM)
 - start up a tmux session `tmux` (or `tmux a` to reconnect to a previous tmux session)
 
 ## Caveats
 
-- I set up a .tmux.conf file for user centos which rebinds the tmux prefix to ctrl-a (default is ctrl-b in tmux, fuck knows why)
-- I'm using the **puppet apply** provisioner and everything is done in one file at `puppet/environments/production/manifests/default.pp`
+- I set up a .tmux.conf file for user ubuntu which rebinds the tmux prefix to ctrl-a (default is ctrl-b in tmux, who knows why)
+- I'm using the **puppet apply** provisioner and everything is done in one file at `puppet/environments/production/manifests/default.pp` - buy me a VB
 - Puppet modules have been vendored into `puppet/environments/production/modules/` for reliability, speed, and simplicity
 
 ## Why?
@@ -44,19 +54,17 @@ Using Vagrant to interact with SLICE via the vagrant-openstack-provider plugin o
 
 ## How?
 
-vagrant-openstack-provider creates a CentOS 7 vm.
+vagrant-openstack-provider creates a Linux vm (Ubuntu currently as it includes a package for mosh)
 
 Vagrant's shell provisioner then ensures that:
-- epel package repos are configured
 - Puppet's package repo for puppet-collections 1 is configured
 - puppet-agent package is installed
-- revisit vm flavour? Probably 2 cores and 2 GB RAM is overkill for what this VM does.
+- Probably 2 cores and 2 GB RAM is overkill for what this VM does.
 
 Vagrant's puppet provisioner then takes over configuration and installs a bunch of packages, including Vagrant, tmux, etc.
 
 ## To Do
 
-- I manually did 'yum update' and a reboot early in the peace. Should include in the shell provisioner step?
 - Add gcc, make and other build tools?
-- Pass through SLICE credentials somehow
+- Pass through SLICE credentials somehow, maybe
 
