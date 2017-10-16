@@ -1,3 +1,4 @@
+# Disclaimer: this is hacky as.  ¯\_(ツ)_/¯
 
 $packages = [
   'mosh',
@@ -24,12 +25,7 @@ bind r source-file ~/.tmux.conf
 unbind ^A
 bind ^A select-pane -t :.+'
 
-file {'/root/.tmux.conf':
-  ensure  => file,
-  content => $tmux_conf,
-}
-
-file {'/home/ubuntu/.tmux.conf':
+file { ['/root/.tmux.conf', '/home/ubuntu/.tmux.conf']:
   ensure  => file,
   content => $tmux_conf,
 }
