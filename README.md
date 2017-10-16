@@ -1,7 +1,7 @@
 # slice-jump
 
 This is a fairly minimal Vagrant project for spinning up a jump host in SLICE
-(OpenStack) that also has Vagrant (and the vagrant-openstack-provider plugin) installed and other useful things such as:
+(Puppet's internal OpenStack) that also has Vagrant (and the vagrant-openstack-provider plugin) installed and other useful things such as:
 - mosh (mobile shell)
 - tmux
 - bind-utils (host, nslookup)
