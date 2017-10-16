@@ -21,7 +21,7 @@ Source the rc file:
 source slice.rc
 ```
 
-When prompted, provide your PuppetPass password.
+When prompted, provide your password.
 
 In the Vagrantfile you'll see that the slicejump host is being created in network0. You may want to change this if you want your slicejump host in some special network you may have created.
 
@@ -41,6 +41,13 @@ Moshing in (alternative to ssh):
 - ensure mosh is installed on your Mac or whatever your laptop / desktop is running - https://mosh.org/ (eg `brew install mosh`)
 - `mosh --ssh "ssh -i ~/.ssh/slice.pem" ubuntu@IP_ADDR_OF_VM` (replace `IP_ADDR_OF_VM` with the IP of the VM)
 - start up a tmux session `tmux` (or `tmux a` to reconnect to a previous tmux session)
+
+## What next?
+
+Now you have the ability to use the vagrant-openstack plugin from a VM that's very close to the OpenStack API service, so you may want to take advantage of one of the following projects to assist with setting up an environment:
+
+- Puppet Debugging Kit - [Puppet internal](https://github.com/puppetlabs/puppet-debugging-kit) / [Public](https://github.com/sharpie/puppet-debugging-kit)
+- [Oscar](https://github.com/oscar-stack/oscar)
 
 ## Caveats
 
