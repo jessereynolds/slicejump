@@ -4,9 +4,10 @@ $packages = [
   'mosh',
   'tmux',
   'git',
+  'build-essential',
 ]
 
-package {$packages:
+package { $packages:
   ensure => present,
 }
 
@@ -30,7 +31,10 @@ file { ['/root/.tmux.conf', '/home/ubuntu/.tmux.conf']:
   content => $tmux_conf,
 }
 
-include vagrant
+class { vagrant:
+  version => '1.8.7',
+  require => Package['build-essential']
+}
 
 $vagrant_plugins = [
   'vagrant-openstack-provider',
@@ -39,6 +43,7 @@ $vagrant_plugins = [
 ]
 
 vagrant::plugin { $vagrant_plugins:
-  user => 'ubuntu'
+  user    => 'ubuntu',
+  require => Class['vagrant'],
 }
 
