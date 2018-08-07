@@ -47,3 +47,5 @@ vagrant::plugin { $vagrant_plugins:
   require => Class['vagrant'],
 }
 
+include ntp
+

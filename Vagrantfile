@@ -1,4 +1,4 @@
-require 'vagrant-openstack-provider'
+#require 'vagrant-openstack-provider'
 
 $script = <<SCRIPT
 wget https://apt.puppetlabs.com/puppet5-release-trusty.deb
@@ -25,6 +25,9 @@ Vagrant.configure("2") do |config|
     os.keypair_name       = ENV['OS_KEYPAIR_NAME']
     os.server_name        = 'slicejump'
   end
+
+  # KILL SMB WITH FIRE
+  config.vm.allowed_synced_folder_types = [:rsync]
 
   config.vm.provision "shell" do |s|
     s.inline = $script
