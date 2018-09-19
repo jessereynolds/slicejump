@@ -1,0 +1,18 @@
+#!/bin/bash
+
+export OS_AUTH_URL=https://<YOURORG>.platform9.net/keystone/v3
+export OS_IDENTITY_API_VERSION=3
+export OS_REGION_NAME="Portland"
+export OS_USERNAME="my-username"
+export OS_PROJECT_NAME="my-project-name"
+export OS_PROJECT_DOMAIN_ID="default"
+export OS_PROJECT_DOMAIN_ID="default"
+export OS_KEYPAIR_NAME="my-openstack-key-name"
+export OS_SSH_KEY_PATH="${HOME}/.ssh/openstack.key"
+
+echo "Please enter your OpenStack Password: "
+read -sr OS_PASSWORD_INPUT
+export OS_PASSWORD=$OS_PASSWORD_INPUT
+
+export VAGRANT_DEFAULT_PROVIDER="openstack"
+
