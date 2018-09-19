@@ -1,4 +1,7 @@
-#require 'vagrant-openstack-provider'
+# Vagrantfile to create an Ubuntu VM on Platform9 OpenStack
+# In our environment we have to boot from a new volume rather
+# than booting directly from an image, hence the `volume_boot`
+# config hash.
 
 $script = <<SCRIPT
 wget https://apt.puppetlabs.com/puppet5-release-trusty.deb
@@ -11,19 +14,27 @@ SCRIPT
 Vagrant.configure("2") do |config|
   config.ssh.username = 'ubuntu'
   config.ssh.private_key_path = ENV['OS_SSH_KEY_PATH']
-
+  config.ssh.insert_key = true
   config.vm.provider :openstack do |os|
-    os.openstack_auth_url = ENV['OS_AUTH_URL']
-    os.username           = ENV['OS_USERNAME']
-    os.password           = ENV['OS_PASSWORD']
-    os.tenant_name        = ENV['OS_TENANT_NAME']
-    os.flavor             = 'g1.medium'
-    os.image              = 'ubuntu_14.04_x86_64'
-    os.floating_ip_pool   = 'ext-net-pdx1-opdx1'
-    os.networks           = ['network0']
-    os.security_groups    = ['sg0']
-    os.keypair_name       = ENV['OS_KEYPAIR_NAME']
-    os.server_name        = 'slicejump'
+    os.openstack_auth_url   = ENV['OS_AUTH_URL']
+    os.identity_api_version = ENV['OS_IDENTITY_API_VERSION']
+    os.username             = ENV['OS_USERNAME']
+    os.password             = ENV['OS_PASSWORD']
+    os.keypair_name         = ENV['OS_KEYPAIR_NAME']
+    os.project_name         = ENV['OS_PROJECT_NAME']
+    os.region               = ENV['OS_REGION_NAME']
+    os.domain_name          = ENV['OS_PROJECT_DOMAIN_ID']
+    os.flavor               = 'vol.small'
+    os.floating_ip_pool     = 'external'
+    os.networks             = ['network1']
+    os.security_groups      = ['default']
+    os.server_name          = 'slicejump'
+    os.availability_zone    = 'nova'
+    os.volume_boot          = {
+      size:              15,
+      delete_on_destroy: true,
+      image:             'ubuntu_18.04_server_x86_64',
+    }
   end
 
   # KILL SMB WITH FIRE
