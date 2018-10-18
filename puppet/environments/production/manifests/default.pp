@@ -5,6 +5,7 @@ $packages = [
   'tmux',
   'git',
   'build-essential',
+  'tree',
 ]
 
 package { $packages:
