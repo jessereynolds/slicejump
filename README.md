@@ -83,4 +83,4 @@ Vagrant's puppet provisioner then takes over configuration and installs a bunch 
 
 - Add gcc, make and other build tools?
 - Pass through OpenStack credentials somehow, maybe
-
+- See if this commit mades it through GitHub's outage
